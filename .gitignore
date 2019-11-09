@@ -1,0 +1,4 @@
+#Ignore
+/build
+*.cmo
+*.cmi
