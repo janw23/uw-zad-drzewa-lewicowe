@@ -22,14 +22,14 @@ let compare (x : 'a) (y : 'a) = x < y;;
 (* Zwraca wartość w pierwszym wierzchołku kolejki que *)
 let frontOf (que : 'a queue) =
 	match que with
-	| Null -> raise (failwith "frontOf failure")
-	| Node(v,_,_,_) -> v;;
+	| Node(v,_,_,_) -> v
+	| Null -> raise (failwith "frontOf failure");;
 
 (* Zwraca wysokość drzewa que *)
 let heightOf (que : 'a queue) =
 	match que with
-	| Null -> 0
-	| Node(_,h,_,_) -> h;;
+	| Node(_,h,_,_) -> h
+	| Null -> 0;;
 
 (* Łączy kolejki queA i queB w jedną *)
 let rec join (queA : 'a queue) (queB : 'a queue) =
@@ -42,16 +42,17 @@ let rec join (queA : 'a queue) (queB : 'a queue) =
 			then (queA, queB) else (queB, queA)
 		 in
 			match queL with
-			| Null -> raise (failwith "join failure")
-			| Node(vL, hL, lL, rL) ->
+			| Node(vL, _, lL, rL) ->
 				(* newR to drzewo powstałe z połączenia słabszego drzewa *)
 				(* z prawym poddrzewem mocniejszego drzewa               *)
 				let newR = join rL queR in
-				let hR = heightOf newR in
+				let hR = heightOf newR
+				and hL = heightOf lL in
 					(* Jeśli wysokość nowego prawego drzewa jest większa *)
 					(* niż lewego, to trzeba je zamienić miejscami       *)
 					if hR > hL then Node(vL, hL + 1, newR, lL)
-					else 			Node(vL, hR + 1, lL, newR);;  
+					else 			Node(vL, hR + 1, lL, newR)
+			| Null -> raise (failwith "join failure");;
 
 (* Dołącza element v do kolejki que *)
 let add (v : 'a) (que : 'a queue) =
@@ -60,6 +61,6 @@ let add (v : 'a) (que : 'a queue) =
 (* Usuwa najmniejszy element z kolejki i go zwraca *)
 let delete_min (que : 'a queue) =
 	match que with
-	| Null -> raise Empty
-	| Node(v, h, l, r) -> (v, join l r);;
+	| Node(v, h, l, r) -> (v, join l r)
+	| Null -> raise Empty;;
 

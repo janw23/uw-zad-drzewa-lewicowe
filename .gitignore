@@ -2,3 +2,5 @@
 /build
 *.cmo
 *.cmi
+/tests
+testuj.sh
