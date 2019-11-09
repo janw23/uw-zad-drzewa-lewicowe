@@ -39,18 +39,19 @@ let rec join (queA : 'a queue) (queB : 'a queue) =
 	(* według funkcji compare *)
 	else let queL, queR =
 			if compare (frontOf queA) (frontOf queB)
-			then (queA, queB) else (queB, queA) in
-				match queL with
-				| Null -> raise (failwith "join failure")
-				| Node(vL, hL, lL, rL) ->
-					(* newR to drzewo powstałe z połączenia słabszego drzewa *)
-					(* z prawym poddrzewem mocniejszego drzewa               *)
-					let newR = join rL queR in
-					let hR = heightOf newR in
-						(* Jeśli wysokość nowego prawego drzewa jest większa *)
-						(* niż lewego, to trzeba je zamienić miejscami       *)
-						if hR > hL then Node(vL, hL + 1, newR, lL)
-						else 			Node(vL, hR + 1, lL, newR);;  
+			then (queA, queB) else (queB, queA)
+		 in
+			match queL with
+			| Null -> raise (failwith "join failure")
+			| Node(vL, hL, lL, rL) ->
+				(* newR to drzewo powstałe z połączenia słabszego drzewa *)
+				(* z prawym poddrzewem mocniejszego drzewa               *)
+				let newR = join rL queR in
+				let hR = heightOf newR in
+					(* Jeśli wysokość nowego prawego drzewa jest większa *)
+					(* niż lewego, to trzeba je zamienić miejscami       *)
+					if hR > hL then Node(vL, hL + 1, newR, lL)
+					else 			Node(vL, hR + 1, lL, newR);;  
 
 (* Dołącza element v do kolejki que *)
 let add (v : 'a) (que : 'a queue) =
