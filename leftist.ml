@@ -23,7 +23,7 @@ let compare (x : 'a) (y : 'a) = x < y;;
 let frontOf (que : 'a queue) =
 	match que with
 	| Node(v,_,_,_) -> v
-	| Null -> raise (failwith "frontOf failure");;
+	| Null -> raise Empty;;
 
 (* Zwraca wysokość drzewa que *)
 let heightOf (que : 'a queue) =
@@ -52,15 +52,14 @@ let rec join (queA : 'a queue) (queB : 'a queue) =
 					(* niż lewego, to trzeba je zamienić miejscami       *)
 					if hR > hL then Node(vL, hL + 1, newR, lL)
 					else 			Node(vL, hR + 1, lL, newR)
-			| Null -> raise (failwith "join failure");;
+			| Null -> raise Empty;;
 
 (* Dołącza element v do kolejki que *)
 let add (v : 'a) (que : 'a queue) =
 	join que (Node(v, 1, empty, empty));;
 
-(* Usuwa najmniejszy element z kolejki i go zwraca *)
+(* Zwraca parę (najmniejszy element, nowe drzewo bez tego elementu *)
 let delete_min (que : 'a queue) =
 	match que with
-	| Node(v, h, l, r) -> (v, join l r)
+	| Node(v, _, l, r) -> (v, join l r)
 	| Null -> raise Empty;;
-
