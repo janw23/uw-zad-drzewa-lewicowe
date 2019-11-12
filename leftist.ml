@@ -63,3 +63,62 @@ let delete_min (que : 'a queue) =
 	match que with
 	| Node(v, _, l, r) -> (v, join l r)
 	| Null -> raise Empty;;
+
+let a = add 10 empty;;
+let a = add 12 a;;
+let a = add 5 a;;
+
+let b = add 8 empty;;
+let b = add 14 b;;
+let b = add 7 b;;
+let b = add 3 b;;
+
+let c = join a b;;
+let (e, c) = delete_min c;;
+assert(e = 3);;
+
+let (e, c) = delete_min c;;
+assert(e = 5);;
+
+let (e, c) = delete_min c;;
+assert(e = 7);;
+
+let (e, c) = delete_min c;;
+assert(e = 8);;
+
+let (e, c) = delete_min c;;
+assert(e = 10);;
+
+let (e, c) = delete_min c;;
+assert(e = 12);;
+
+let (e, c) = delete_min c;;
+assert(e = 14);;
+
+assert(is_empty c);;
+
+assert( try let _ = delete_min c in false with Empty -> true);;
+
+let b = add "a" empty;;
+let b = add "aca" b;;
+let b = add "nzbzad" b;;
+let b = add "nzbza" b;;
+let b = add "bxbxc" b;;
+
+let (a,b) = delete_min b;;
+assert (a = "a");;
+
+let (a,b) = delete_min b;;
+assert (a = "aca");;
+
+let (a,b) = delete_min b;;
+assert (a = "bxbxc");;
+
+let (a,b) = delete_min b;;
+assert (a = "nzbza");;
+
+let (a,b) = delete_min b;;
+assert (a = "nzbzad");;
+
+assert(is_empty b = true);;
+assert (try let _=delete_min b in false with Empty -> true);;

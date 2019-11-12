@@ -49,17 +49,17 @@ let run_test n r =
 	let rec iterate k =
 		if k = 0 then () else (
 		println ("Running test #" ^ (string_of_int (n - k)));
-		let a = random_range (Random.int 10 + 10) r
-		and b = random_range (Random.int 10 + 10) r
+		let a = random_range (Random.int 100 + 10) r
+		and b = random_range (Random.int 100 + 10) r
 		in
 			let sorted_list = List.sort compare_return_int (a @ b)
 			and que = list_to_queue (a @ b)
 			in
-				println ("List  = " ^ (str_list sorted_list));
-				println ("Queue = " ^ (str_queue que));
+				(*println ("List  = " ^ (str_list sorted_list));
+				println ("Queue = " ^ (str_queue que));*)
 				assert((str_queue que) = (str_list sorted_list));
 				println "";
 				iterate (k - 1))
 	in iterate n;;
 
-run_test 1000 1000;;
+run_test 1000000 1000000;;
